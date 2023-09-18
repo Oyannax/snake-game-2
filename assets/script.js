@@ -6,6 +6,7 @@ let snakeX = 5, snakeY = 10;
 let snakeBody = [];
 let velocityX = 0, velocityY = 0;
 let setIntervalId;
+let score = 0;
 
 // Passing a random 0 - 30 value as food position
 const changeFoodPosition = () => {
@@ -66,6 +67,10 @@ const initGame = () => {
     // Adding a div for each part of the snake's body
     for (let i = 0; i < snakeBody.length; i++) {
         htmlMarkup += `<div class="head" style="grid-area: ${snakeBody[i][1]} / ${snakeBody[i][0]}"></div>`;
+        // Checking if the snake head hit the body, if so set gameOver to true
+        if (i !== 0 && snakeBody[0][1] === snakeBody[i][1] && snakeBody[0][0] === snakeBody[i][0]) {
+            gameOver = true;
+        }
     }
     playBoard.innerHTML = htmlMarkup;
 }
