@@ -1,4 +1,6 @@
 const playBoard = document.querySelector(".play-board");
+const scoreElement = document.querySelector(".score");
+const highScoreElement = document.querySelector(".high-score");
 
 let gameOver = false;
 let foodX, foodY;
@@ -7,6 +9,10 @@ let snakeBody = [];
 let velocityX = 0, velocityY = 0;
 let setIntervalId;
 let score = 0;
+
+// Getting high score from the local storage
+let highScore = localStorage.getItem("high-score") || 0;
+highScoreElement.innerText = `High Score: ${highScore}`;
 
 // Passing a random 0 - 30 value as food position
 const changeFoodPosition = () => {
@@ -46,6 +52,12 @@ const initGame = () => {
     if (snakeX === foodX && snakeY === foodY) {
         changeFoodPosition();
         snakeBody.push([foodX, foodY]); // Pushing food position to snake body array
+        score++; // Increment score by 1
+
+        highScore = score >= highScore ? score : highScore;
+        localStorage.setItem("high-score", highScore);
+        scoreElement.innerText = `Score: ${score}`;
+        highScoreElement.innerText = `High Score: ${highScore}`;
     }
 
     for (let i = snakeBody.length - 1; i > 0; i--) {
